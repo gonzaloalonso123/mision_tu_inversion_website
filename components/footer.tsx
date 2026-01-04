@@ -61,13 +61,6 @@ export function Footer() {
                   misiontuinversion@gmail.com
                 </a>
               </li>
-              <li>
-                <a href="tel:+34638142619" className="hover:text-primary transition-colors">
-                  +34 638 14 26 19
-                </a>
-              </li>
-              <li>Calle Saturno 12</li>
-              <li>Tres Cantos, Madrid</li>
             </ul>
           </div>
         </div>

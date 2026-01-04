@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Lora, Montserrat } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { Toaster } from "sonner"
 import "./globals.css"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -43,6 +44,7 @@ export default function RootLayout({
         <Navigation />
         {children}
         <Footer />
+        <Toaster />
         <Analytics />
       </body>
     </html>

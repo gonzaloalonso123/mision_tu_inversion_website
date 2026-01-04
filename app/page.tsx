@@ -133,10 +133,6 @@ export default function HomePage() {
                 <a href="mailto:misiontuinversion@gmail.com" className="hover:text-white transition-colors">
                   misiontuinversion@gmail.com
                 </a>
-                <span className="hidden sm:inline text-white/50">|</span>
-                <a href="tel:+34638142619" className="hover:text-white transition-colors">
-                  +34 638 14 26 19
-                </a>
               </div>
             </div>
           </div>
@@ -259,10 +255,6 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center text-sm text-white/70">
             <a href="mailto:misiontuinversion@gmail.com" className="hover:text-white transition-colors">
               misiontuinversion@gmail.com
-            </a>
-            <span className="hidden sm:inline text-white/40">|</span>
-            <a href="tel:+34638142619" className="hover:text-white transition-colors">
-              +34 638 14 26 19
             </a>
           </div>
         </div>
