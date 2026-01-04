@@ -10,21 +10,21 @@ const lora = Lora({ subsets: ["latin"], weight: ["400"], variable: "--font-lora"
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" })
 
 export const metadata: Metadata = {
-  title: "MTI Estrategias Inmobiliarias",
-  description: "Método de Transformación Inmobiliaria: soluciones para invertir con seguridad y rentabilidad",
-  generator: "v0.app",
+  title: "MTI - Estrategia Inmobiliaria",
+  description: "Soluciones para invertir con seguridad y rentabilidad",
+  generator: "Gonzalo Alonso",
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
+        url: "/isotipo-black.png",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/icon-dark-32x32.png",
+        url: "/isotipo-white.png",
         media: "(prefers-color-scheme: dark)",
       },
       {
-        url: "/icon.svg",
+        url: "/isotipo-black.png",
         type: "image/svg+xml",
       },
     ],

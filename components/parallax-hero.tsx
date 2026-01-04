@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, type ReactNode } from "react"
 
 interface ParallaxHeroProps {
   imageUrl: string
@@ -17,12 +17,32 @@ export function ParallaxHero({ imageUrl, imageQuery, title, subtitle, height = "
   const targetOffsetRef = useRef(0)
   const currentOffsetRef = useRef(0)
   const animationFrameRef = useRef<number | null>(null)
+  const resolvedImageUrl = useMemo(() => {
+    if (imageUrl?.trim()) {
+      return imageUrl
+    }
+
+    const safeQuery = imageQuery ? encodeURIComponent(imageQuery) : "luxury real estate"
+    return `https://source.unsplash.com/1600x1200/?${safeQuery}`
+  }, [imageUrl, imageQuery])
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (prefersReducedMotion.matches) {
+    if (!heroRef.current || !parallaxRef.current) {
       return
     }
+
+    if (typeof window === "undefined") {
+      return
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (prefersReducedMotion.matches) {
+      parallaxRef.current.style.transform = "translate3d(0, 0, 0) scale(1.05)"
+      return
+    }
+
+    let viewportHeight = window.innerHeight || 1
+    let maxOffset = 160
 
     const smoothAnimate = () => {
       const target = targetOffsetRef.current
@@ -45,13 +65,12 @@ export function ParallaxHero({ imageUrl, imageQuery, title, subtitle, height = "
       if (!heroRef.current) return
 
       const rect = heroRef.current.getBoundingClientRect()
-      const viewportHeight = window.innerHeight || 1
+      viewportHeight = window.innerHeight || 1
+      maxOffset = Math.min(rect.height * 0.35, 220)
       const heroCenter = rect.top + rect.height / 2
       const viewportCenter = viewportHeight / 2
       const distanceFromCenter = heroCenter - viewportCenter
 
-      // Clamp translation to avoid overshoot on fast scrolls.
-      const maxOffset = 160
       targetOffsetRef.current = Math.max(Math.min((-distanceFromCenter / viewportHeight) * maxOffset, maxOffset), -maxOffset)
 
       if (animationFrameRef.current === null) {
@@ -67,6 +86,11 @@ export function ParallaxHero({ imageUrl, imageQuery, title, subtitle, height = "
       updateTargetOffset()
     }
 
+    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => updateTargetOffset()) : null
+    if (resizeObserver && heroRef.current) {
+      resizeObserver.observe(heroRef.current)
+    }
+
     window.addEventListener("scroll", handleScroll, { passive: true })
     window.addEventListener("resize", handleResize)
     updateTargetOffset()
@@ -74,6 +98,7 @@ export function ParallaxHero({ imageUrl, imageQuery, title, subtitle, height = "
     return () => {
       window.removeEventListener("scroll", handleScroll)
       window.removeEventListener("resize", handleResize)
+      resizeObserver?.disconnect()
       if (animationFrameRef.current !== null) {
         window.cancelAnimationFrame(animationFrameRef.current)
       }
@@ -92,7 +117,7 @@ export function ParallaxHero({ imageUrl, imageQuery, title, subtitle, height = "
         }}
       >
         <img
-          src={imageUrl}
+          src={resolvedImageUrl}
           alt={title}
           className="w-full h-full object-cover scale-110"
         />
