@@ -1,6 +1,6 @@
 import { ParallaxHero } from "@/components/parallax-hero"
 import { ServiceCard } from "@/components/service-card"
-import { OperatingRegions } from "@/components/operating-regions"
+import OperatingInTheWorld, { OperatingRegions } from "@/components/operating-regions"
 
 const services = [
   {
@@ -182,14 +182,17 @@ export default function HomePage() {
       <section id="operamos" className="py-24 px-4 sm:px-6 lg:px-8 bg-muted">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl md:text-5xl mb-4 text-balance">Dónde operamos</h2>
+            <h2 className="font-serif text-4xl md:text-5xl mb-4 text-balance">Presencia Internacional</h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-6 shadow-[0_0_10px_rgba(249,226,128,0.6)]" />
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto text-balance">
               Presencia activa en mercados que ofrecen estabilidad, rentabilidad y oportunidades antes de que se saturen.
             </p>
           </div>
 
-          <OperatingRegions />
+          <OperatingInTheWorld />
+          <p className="text-muted-foreground text-center text-lg max-w-3xl mx-auto text-balance">
+            ¿Quieres saber si operamos en tu país? <a href="#cta" className="text-primary underline hover:text-primary/80 transition-colors">Contáctanos</a>.
+          </p>
         </div>
       </section>
 
