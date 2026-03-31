@@ -61,6 +61,11 @@ export function Footer() {
                   misiontuinversion@gmail.com
                 </a>
               </li>
+              <li>
+                <a href="tel:+34620568624" className="hover:text-primary transition-colors">
+                  +34 620 56 86 24
+                </a>
+              </li>
             </ul>
           </div>
         </div>

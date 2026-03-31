@@ -6,39 +6,39 @@ import { z } from "zod"
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
-    name: z.string().min(1, "El nombre es obligatorio"),
-    email: z.string().email("Email inválido"),
-    phone: z.string().optional(),
-    service: z.string().min(1, "Selecciona un servicio"),
-    message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
+  name: z.string().min(1, "El nombre es obligatorio"),
+  email: z.string().email("Email inválido"),
+  phone: z.string().optional(),
+  service: z.string().min(1, "Selecciona un servicio"),
+  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 })
 
 export async function submitContactForm(prevState: any, formData: FormData) {
-    const validatedFields = contactSchema.safeParse({
-        name: formData.get("name"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        service: formData.get("service"),
-        message: formData.get("message"),
-    })
+  const validatedFields = contactSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    service: formData.get("service"),
+    message: formData.get("message"),
+  })
 
-    if (!validatedFields.success) {
-        return {
-            success: false,
-            errors: validatedFields.error.flatten().fieldErrors,
-            message: "Por favor revisa los campos del formulario",
-        }
+  if (!validatedFields.success) {
+    return {
+      success: false,
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Por favor revisa los campos del formulario",
     }
+  }
 
-    const { name, email, phone, service, message } = validatedFields.data
+  const { name, email, phone, service, message } = validatedFields.data
 
-    try {
-        const data = await resend.emails.send({
-            from: "Misión Tu Inversión <onboarding@resend.dev>",
-            to: "misiontuinversion@gmail.com",
-            replyTo: email,
-            subject: `Nuevo mensaje de contacto: ${service}`,
-            html: `
+  try {
+    const data = await resend.emails.send({
+      from: "Misión Tu Inversión <onboarding@resend.dev>",
+      to: "misiontuinversion@gmail.com",
+      replyTo: email,
+      subject: `Nuevo mensaje de contacto: ${service}`,
+      html: `
         <!DOCTYPE html>
         <html>
           <head>
@@ -59,6 +59,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             <div class="container">
               <div class="header">
                 <h1 style="margin:0; font-size: 24px;">Nuevo Contacto</h1>
+                <p>Solicitud de contacto recibida desde <b>misiontuinversion.com</b></p>
               </div>
               <div class="content">
                 <div class="field">
@@ -92,17 +93,17 @@ export async function submitContactForm(prevState: any, formData: FormData) {
           </body>
         </html>
       `,
-        })
+    })
 
-        return {
-            success: true,
-            message: "Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.",
-        }
-    } catch (error) {
-        console.error("Error sending email:", error)
-        return {
-            success: false,
-            message: "Hubo un error al enviar el mensaje. Por favor intenta de nuevo.",
-        }
+    return {
+      success: true,
+      message: "Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.",
     }
+  } catch (error) {
+    console.error("Error sending email:", error)
+    return {
+      success: false,
+      message: "Hubo un error al enviar el mensaje. Por favor intenta de nuevo.",
+    }
+  }
 }
