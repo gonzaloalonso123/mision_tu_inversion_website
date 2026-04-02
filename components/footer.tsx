@@ -17,6 +17,12 @@ const serviceLinks = [
   "Obtención de Hipotecas",
 ]
 
+const legalLinks = [
+  { label: "Aviso Legal", href: "/legal/aviso" },
+  { label: "Política de Privacidad", href: "/legal/privacidad" },
+  { label: "Política de Cookies", href: "/legal/cookies" },
+]
+
 export function Footer() {
   return (
     <footer className="bg-black text-white border-t border-white/10">
@@ -70,8 +76,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 text-center text-sm text-white/40">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/40">
           <p>{"© 2026 MTI. Todos los derechos reservados."}</p>
+          <ul className="flex flex-wrap items-center gap-4">
+            {legalLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="hover:text-primary transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>

@@ -6,6 +6,7 @@ import { Toaster } from "sonner"
 import "./globals.css"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { CookieBanner } from "@/components/cookie-banner"
 
 const lora = Lora({ subsets: ["latin"], weight: ["400"], variable: "--font-lora" })
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" })
@@ -44,6 +45,7 @@ export default function RootLayout({
         <Navigation />
         {children}
         <Footer />
+        <CookieBanner />
         <Toaster />
         <Analytics />
       </body>
